@@ -23,12 +23,13 @@ variables:
 
 
 stages:
+
 - stage: Build
   displayName: Build stage
   jobs:
   - job: Build
     displayName: Build
-    pool:
+    pool: 
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
