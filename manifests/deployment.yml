@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: fverapiulisesv 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fverapiulisesv
+  template:
+    metadata:
+      labels:
+        app: fverapiulisesv 
+    spec:
+      containers:
+        - name: fverapiulisesv 
+          image: uveraapi.azurecr.io/fverapiulisesv
+          ports:
+          - containerPort: 80
