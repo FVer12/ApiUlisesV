@@ -4,7 +4,7 @@
 
 trigger:
 - main
-pool: Mi-lap
+pool: Mi_lap
 resources:
 - repo: self
 
