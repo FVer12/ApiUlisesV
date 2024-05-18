@@ -5,7 +5,6 @@ resources:
 - repo: self
 
 variables:
-
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '8a13e460-457a-463e-ab57-526c4f3150d3'
   imageRepository: 'fverapiulisesv'
@@ -14,19 +13,16 @@ variables:
   tag: '$(Build.BuildId)'
   imagePullSecret: 'uveraapie3a8-auth'
 
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-
-
 stages:
-
 - stage: Build
   displayName: Build stage
   jobs:
   - job: Build
     displayName: Build
-    pool: 
-      name: 'Mi_lap'  # Especifica el pool del agente auto-hospedado
+    pool:
+      name: 'Default'  # Reemplaza "Default" por el nombre de tu pool de agentes auto-hospedado
+      demands:
+        - agent.name -equals Mi_lap  # Especifica el nombre del agente auto-hospedado
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -49,7 +45,9 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     pool:
-      name: 'Mi_lap'  # Especifica el pool del agente auto-hospedado
+      name: 'Default'  # Reemplaza "Default" por el nombre de tu pool de agentes auto-hospedado
+      demands:
+        - agent.name -equals Mi_lap  # Especifica el nombre del agente auto-hospedado
     environment: 'FVer12ApiUlisesV.default'
     strategy:
       runOnce:
