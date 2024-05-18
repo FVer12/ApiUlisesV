@@ -22,7 +22,7 @@ stages:
     pool:
       name: 'Default'  # Reemplaza "Default" por el nombre de tu pool de agentes auto-hospedado
       demands:
-        - agent.name -equals Mi_lap  # Especifica el nombre del agente auto-hospedado
+        - agent.name -equals  LAPTOP-DNQCF9MM  # Especifica el nombre del agente auto-hospedado
     steps:
     - script: |
         if [[ "$(Build.SourceBranch)" == "refs/pull/"* ]]; then
