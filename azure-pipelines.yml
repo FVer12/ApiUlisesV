@@ -1,10 +1,6 @@
-# Deploy to Azure Kubernetes Service
-# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - main
-pool: Mi_lap
+
 resources:
 - repo: self
 
@@ -30,7 +26,7 @@ stages:
   - job: Build
     displayName: Build
     pool: 
-      vmImage: $(vmImageName)
+      name: 'Mi_lap'  # Especifica el pool del agente auto-hospedado
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -42,7 +38,7 @@ stages:
         tags: |
           $(tag)
 
-    - upload: manifests
+    - publish: $(Pipeline.Workspace)/manifests
       artifact: manifests
 
 - stage: Deploy
@@ -53,7 +49,7 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     pool:
-      vmImage: $(vmImageName)
+      name: 'Mi_lap'  # Especifica el pool del agente auto-hospedado
     environment: 'FVer12ApiUlisesV.default'
     strategy:
       runOnce:
@@ -77,4 +73,3 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
-
